@@ -83,10 +83,6 @@ exports.shortenLink = async (req, res) => {
   try {
     const { url } = req.body;
 
-    if (!url) {
-      return res.status(400).send({ message: 'URL is required.' });
-    }
-
     if (!process.env.SHAREAHOLIC_API_KEY) {
       return res.status(500).send({ message: 'Shareaholic API key is not configured.' });
     }

@@ -1,16 +1,21 @@
+// routes/imageRoutes.js
 const express = require('express');
+const { getAllImages, createImage, getImageById, updateImage, deleteImage, shortenLink } = require('../controllers/imageController');
+const { validatorActivator } = require('../middleware/validation');
+const { createImageValidation, updateImageValidation, shortenURLValidation } = require('../middleware/imageValidation');
+
 const router = express.Router();
-const imageController = require('../controllers/imageController');
 
 router.route('/')
-  .get(imageController.getAllImages)
-  .post(imageController.createImage);
+  .get(getAllImages)
+  .post(createImageValidation, validatorActivator, createImage);
 
 router.route('/:id')
-  .get(imageController.getImageById)
-  .put(imageController.updateImage)
-  .delete(imageController.deleteImage);
+  .get(getImageById)
+  .put(updateImageValidation, validatorActivator, updateImage)
+  .delete(deleteImage);
 
-router.post('/shorten', imageController.shortenLink);
+router.route('/shorten')
+  .post(shortenURLValidation, validatorActivator, shortenLink);
 
 module.exports = router;

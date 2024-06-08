@@ -8,6 +8,7 @@ const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const cors = require("cors");
 
+/*------------------------ Custom Packages --------------- */
 const imageRoutes = require('./routes/imageRoutes');
 const errorHandler = require('./middleware/errorHandler');
 const notFoundHandler = require('./middleware/notFoundHandler');
@@ -19,7 +20,7 @@ dotenv.config();
 // Rate limiter to limit requests from a single IP
 const limiter = rateLimit({
   max: 100,
-  windowMs: 60 * 60 * 1000, // 1 hour
+  windowMs: 60 * 60 * 1000, 
   message: "Too many requests from this IP, please try again in an hour!",
 });
 
@@ -49,6 +50,7 @@ server.use((req, res, next) => {
   console.log(`Request URL: ${req.url}, Method: ${req.method}, Query: ${JSON.stringify(req.query)}`);
   next();
 });
+
 
 // second middleware for handling 404 Not Found
 server.use(notFoundHandler);
