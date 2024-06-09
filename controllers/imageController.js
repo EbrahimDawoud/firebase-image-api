@@ -87,13 +87,15 @@ exports.shortenLink = async (req, res) => {
       return res.status(500).send({ message: 'Shareaholic API key is not configured.' });
     }
 
-    const requestUrl = `https://www.shareaholic.com/v2/share/shorten_link?apikey=${process.env.SHAREAHOLIC_API_KEY}&url=${encodeURIComponent(url)}&service[name]=shrlc`;
-
-    const response = await axios.get(requestUrl);
-
-    if (typeof response.data === 'string' && response.data.includes('<html>')) {
-      return res.status(500).send({ message: 'Received HTML response instead of expected JSON. Please check the API endpoint and parameters.' });
-    }
+    const response = await axios.get('https://www.shareaholic.com/v2/share/shorten_link', {
+      params: {
+        apikey: SHAREAHOLIC_API_KEY, 
+        url: url
+      },
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+      }
+    });
 
     if (response.data.status_code === "200" && response.data.data) {
       const shortenedUrl = response.data.data;

@@ -8,6 +8,7 @@ const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const cors = require("cors");
 
+
 /*------------------------ Custom Packages --------------- */
 const imageRoutes = require('./routes/imageRoutes');
 const errorHandler = require('./middleware/errorHandler');
@@ -34,9 +35,6 @@ server.use(express.urlencoded({ extended: true })); // Body parser for URL encod
 server.use(morgan('dev')); 
 
 /*------------------------ Routes --------------- */
-server.get('/hema', (req, res) => {
-  res.json({ message: 'Hello World' });
-});
 
 // Importing imageRoutes 
 server.use('/api/images', imageRoutes);
@@ -61,4 +59,9 @@ server.use(errorHandler);
 /*------------------------ Server --------------- */
 server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
+  // Open API documentation in the browser
+  (async () => {
+    const open = (await import('open')).default;
+    open(`http://localhost:${port}/api-docs`);
+  })();
 });
