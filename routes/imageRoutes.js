@@ -1,4 +1,3 @@
-// routes/imageRoutes.js
 const express = require('express');
 const { getAllImages, createImage, getImageById, updateImage, deleteImage, shortenLink } = require('../controllers/imageController');
 const { validatorActivator } = require('../middleware/validation');
