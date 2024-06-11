@@ -1,4 +1,3 @@
-// controllers/imageController.js
 const { db } = require('../config/firebase');
 const axios = require('axios');
 
